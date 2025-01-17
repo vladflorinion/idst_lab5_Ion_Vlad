@@ -3,7 +3,7 @@ import code         # code.interact
 import os           # environment variables
 import inspect      # call stack inspection
 import random       # dumb random number generator
- 
+import argparse
 from discord.ext import commands    # Bot class and utils
  
 ################################################################################
@@ -121,10 +121,11 @@ async def roll_error(ctx, error):
 ################################################################################
  
 if __name__ == '__main__':
-    # check that token exists in environment
-    if 'BOT_TOKEN' not in os.environ:
-        log_msg('save your token in the BOT_TOKEN env variable!', 'error')
-        exit(-1)
- 
-    # launch bot (blocking operation)
-    bot.run(os.environ['BOT_TOKEN'])
+   parser = argparse.ArgumentParser(description="BOT DISCORD =)")
+   parser.add_argument('-t','--token', type=str, help='Token Bot', default=os.environ.get("BOT_TOKEN"))
+   args = parser.parse_args()
+   
+   if not args.token:
+       log_msg("Nu exista token")
+       exit(-1)
+   bot.run(args.token)
